@@ -1,15 +1,4 @@
 # Présentation du dépot
 
-Un projet initialisé avec deux packages, transformers et estimators. Un fichier gitignore et un **main** pour lancer votre code.
+Ce dépôt regroupe les fichiers concernant le projet POO.  Le projet a pour but d'offrir un ensemble d'outils pour l'analyse et le traitement de données. Le travail sera appliqué sur le jeu de données du Covid-19 en France. Ce projet tourne essentiellement autour de deux classes Estimateur et Transformateur.
 
-Dans le requirements.txt on met généralement les dépendances nécessaire pour faire tourner son projet. Le package pipreqs fait ca pour vous. pour l'installer
-
-```
-pip install pipreqs dans un terminal
-```
-
-puis
-
-```
-pipreqs . --force
-```
