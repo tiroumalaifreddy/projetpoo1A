@@ -4,7 +4,7 @@ class Jointure_vertical():
         self.data_deux = data_deux
 
     def fusion_v(self):
-        data_fusion=[]
+        data_fusion = []
         if len(self.data_deux) == len(self.data_un):
             for i in range(len(self.data_un)):
                 data_fusion.append(self.data_un[i] + self.data_deux[i])
