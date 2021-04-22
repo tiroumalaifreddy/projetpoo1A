@@ -5,6 +5,9 @@ from transformers.jointure_vertical import Jointure_vertical
 from transformers.selection_variable import Selection_variable
 from transformers.moyenne_glissante import Moyenne_glissante
 from transformers.fenetrage import Fenetrage
+from estimators.moyenne import Moyenne
+from estimators.ecart_type import Ecart_type
+from transformers.centrage import Centrage
 
 if __name__ == "__main__":
     estimators = Estimators()
@@ -16,11 +19,24 @@ donnees_brut = Conversion('D:/Perso/ENSAI/', "covid-hospit-incid-reg-2021-03-03-
 
 data_un = donnees_brut.convert()
 
-print(data_un)
+print(data_un[0:5])
+
+selection_une = Selection_variable(data_un[0:5], ["numReg", "incid_rea"])
+var = selection_une.select_multiple_var()
+
+C = Centrage()
+
+print(*C.centrage(var), sep="\n")
+
+# E = Ecart_type()
+#
+# print(E.ecart_type_corr(var))
+
+# print(*data_un, sep="\n")
+
 # F = Fenetrage()
 #
 # print(*F.fenetrage(data_un, '2020-03-22', '2020-03-30'), sep="\n")
-
 
 #print(*data_un, sep="\n")
 #M = Moyenne_glissante()
@@ -32,9 +48,9 @@ print(data_un)
 #
 # print(*J.fusion_v(), sep = "\n")
 
-# selection_une = Selection_variable(data_un, ["nomReg", "numReg", "incid_rea"])
-# var_un = selection_une.select_multiple_var()
-# print(*var_un, sep="\n")
+#selection_une = Selection_variable(data_un, ["nomReg"])
+#var_un = selection_une.select_multiple_var()
+#print(*var_un, sep="\n")
 
 # selection_deux = Selection_variable(data_un, "numReg")
 # var_un = selection_une.select_une_var()
