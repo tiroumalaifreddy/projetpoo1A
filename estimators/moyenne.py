@@ -4,5 +4,5 @@ class Moyenne():
         index_variable = data[0].index(variable)
         for liste in data[1:]:
             somme += float(liste[index_variable])
-        return somme/len(data[1:])
+        return round(somme/len(data[1:]),2)
 
