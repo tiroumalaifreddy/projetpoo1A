@@ -24,6 +24,10 @@ class Jeu_de_donnees():
                 for i in range(len(self.rows)):
                     self.rows[i].insert((len(self.rows[i]) + 1 + position), column[i])
 
+    def remove_column(self, position = -1):
+        self.column_names.pop(position)
+        for liste in self.rows:
+            liste.pop(position)
 
-
-
+    def __str__(self):
+        return "{}".format([self.column_names] + self.rows)

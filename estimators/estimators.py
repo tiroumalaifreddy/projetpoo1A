@@ -3,4 +3,4 @@ class Estimators:
         pass
 
     def fit(self):
-        print("Je suis un estimators")
+        pass

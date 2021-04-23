@@ -1,13 +1,15 @@
 from estimators.moyenne import Moyenne
+from transformers.transformers import Transformers
+from Data.Jeu_de_donnees import Jeu_de_donnees
 
 M=Moyenne()
 
-class Centrage():
-    def centrage(self, data):
-        new_data = []
-        for liste in data[1:]:
+class Centrage(Transformers):
+    def transform(self, Table):
+        new_data = [Table.column_names]
+        for liste in Table.rows:
             l = []
             for i in range(len(liste)):
-                l.append(float(liste[i])- M.moyenne(data, data[0][i]))
+                l.append(float(liste[i])- M.fit(Table, Table.column_names[i]))
             new_data.append(l)
-        return new_data
+        return Jeu_de_donnees(new_data)

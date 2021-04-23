@@ -5,4 +5,4 @@ class Transformers(ABC):
         pass
 
     def transform(self):
-        print("Je suis un transformer")
+        pass

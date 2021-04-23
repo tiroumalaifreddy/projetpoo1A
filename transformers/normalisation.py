@@ -1,13 +1,17 @@
 from estimators.moyenne import Moyenne as M
 from estimators.ecart_type import Ecart_type as E
+from transformers.transformers import Transformers
+from Data.Jeu_de_donnees import Jeu_de_donnees
 
 
-class Normalisation():
-    def normalisation(self,data):
+class Normalisation(Transformers):
+    def transform(self, Table):
         new_data = []
-        for liste in data[1:]:
+        for liste in Table.rows:
             l = []
             for i in range(len(liste)):
-                l.append((float(liste[i]) - M().moyenne(data, data[0][i]))/E().ecart_type_corr(data, data[0][i]))
+                l.append(round(((float(liste[i]) - M().fit(Table, Table.column_names[i]))/E().fit(Table, Table.column_names[i])),2))
             new_data.append(l)
-        return new_data
+        data = [Table.column_names] + new_data
+        J = Jeu_de_donnees(data)
+        return J
