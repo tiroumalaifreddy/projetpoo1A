@@ -8,6 +8,7 @@ from transformers.fenetrage import Fenetrage
 from estimators.moyenne import Moyenne
 from estimators.ecart_type import Ecart_type
 from transformers.centrage import Centrage
+from transformers.normalisation import Normalisation
 
 if __name__ == "__main__":
     estimators = Estimators()
@@ -18,15 +19,20 @@ if __name__ == "__main__":
 donnees_brut = Conversion('D:/Perso/ENSAI/', "covid-hospit-incid-reg-2021-03-03-17h20.csv")
 
 data_un = donnees_brut.convert()
+print(data_un)
+# print(data_un[0:5])
+#
+# selection_une = Selection_variable(data_un[0:5], ["incid_rea"])
+# var = selection_une.select_multiple_var()
+# #
+# print(var)
+# Nm = Normalisation()
+# print(Nm.normalisation(var))
 
-print(data_un[0:5])
-
-selection_une = Selection_variable(data_un[0:5], ["numReg", "incid_rea"])
-var = selection_une.select_multiple_var()
-
-C = Centrage()
-
-print(*C.centrage(var), sep="\n")
+#
+# C = Centrage()
+#
+# print(*C.centrage(var), sep="\n")
 
 # E = Ecart_type()
 #
