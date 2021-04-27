@@ -1,6 +1,7 @@
 import csv
 import json
 
+
 class Conversion():
     def __init__(self, folder, filename):
         self.folder = folder

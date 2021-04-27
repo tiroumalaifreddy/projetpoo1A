@@ -1,10 +1,10 @@
 from Data.Jeu_de_donnees import Jeu_de_donnees
-
+from estimators.estimators import Estimators
 from estimators.moyenne import Moyenne as M
 
 
 
-class Ecart_type():
+class Ecart_type(Estimators):
     def fit(self, Jeu_de_donnees, variable):
         et = 0
         index_variable = Jeu_de_donnees.column_names.index(variable)

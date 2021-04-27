@@ -1,11 +1,12 @@
-class Jointure_vertical():
-    def __init__(self, data_un, data_deux):
-        self.data_un = data_un
-        self.data_deux = data_deux
+from Data.Jeu_de_donnees import Jeu_de_donnees
+from transformers.transformers import Transformers
 
-    def fusion_v(self):
-        data_fusion = []
-        if len(self.data_deux) == len(self.data_un):
-            for i in range(len(self.data_un)):
-                data_fusion.append(self.data_un[i] + self.data_deux[i])
-        return data_fusion
+class Jointure_vertical(Transformers):
+
+    def transform(self, Table1, Table2):
+        #if len(Table1.rows) == len(Table2.rows):
+        if 0 == 0:
+            data_fusion = [Table1.column_names + Table2.column_names]
+            for i in range(min(len(Table1.rows), len(Table2.rows))):
+                data_fusion.append(Table1.rows[i] + Table2.rows[i])
+        return Jeu_de_donnees(data_fusion)
