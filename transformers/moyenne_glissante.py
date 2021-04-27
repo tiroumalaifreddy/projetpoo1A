@@ -33,4 +33,4 @@ class Moyenne_glissante(Transformers):
                 liste_moyenne += [[round(somme / n, 2)]]
         new_column = [["M_glissante n{} de {}".format(n,variable)]] + liste_moyenne
         new_Table = Jeu_de_donnees(new_column)
-        return new_Table
+        return Jointure_vertical().transform(Table, new_Table)
