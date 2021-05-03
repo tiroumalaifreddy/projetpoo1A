@@ -12,19 +12,30 @@ from transformers.jointure_vertical import Jointure_vertical
 from transformers.selection_ligne import Selection_ligne
 from transformers.agregation import Agregation
 from transformers.total_id import Total_id
+from estimators.kmeans import Kmeans
+from transformers.clean import Clean
 
-donnees_brut = Conversion('D:/Perso/ENSAI/', "covid-hospit-incid-reg-2021-03-03-17h20.csv")
+donnees_brut = Conversion('D:/Perso/ENSAI/', "VacancesScolaires.json")
 
 data = donnees_brut.convert()
 
 Table = Jeu_de_donnees(data)
-print(Table)
 
 
+C = Clean().transform(Table, remove=True)
+Clean().transform(C)
 
-Table_sept_derniers_jours = Fenetrage().transform(Table, '2020-03-18', '2020-03-24', 0)
+# Table_sept_derniers_jours = Fenetrage().transform(Table, '2020-03-18', '2020-03-24', 0)
+#
+# new_Table = Selection_variable().transform(Table_sept_derniers_jours, ['incid_rea'])
+# new_Table = Normalisation().transform(new_Table)
+# print(new_Table)
+# kmeans = Kmeans().fit(new_Table, 3)
+# print(kmeans.cluster_centers_)
+
+
 #print(*Table_sept_derniers_jours.rows, sep = '\n')
-new_Table = Total_id().transform(Table_sept_derniers_jours, [3], 2)
+#new_Table = Total_id().transform(Table_sept_derniers_jours, [3], 2)
 #print(new_Table)
 # for liste in Table_sept_derniers_jours.rows:
 #     if liste[2] =='84':
