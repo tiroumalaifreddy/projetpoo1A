@@ -11,13 +11,25 @@ from transformers.moyenne_glissante import Moyenne_glissante
 from transformers.jointure_vertical import Jointure_vertical
 from transformers.selection_ligne import Selection_ligne
 from transformers.agregation import Agregation
-donnees_brut = Conversion('D:/Perso/ENSAI/', "donnees-hospitalieres-etablissements-covid19-2021-03-03-17h03.csv")
+from transformers.total_id import Total_id
+
+donnees_brut = Conversion('D:/Perso/ENSAI/', "covid-hospit-incid-reg-2021-03-03-17h20.csv")
 
 data = donnees_brut.convert()
 
 Table = Jeu_de_donnees(data)
-#print(Table)
-print(Agregation().transform(Table, 0, "nb", "region"))
+print(Table)
+
+
+
+Table_sept_derniers_jours = Fenetrage().transform(Table, '2020-03-18', '2020-03-24', 0)
+#print(*Table_sept_derniers_jours.rows, sep = '\n')
+new_Table = Total_id().transform(Table_sept_derniers_jours, [3], 2)
+#print(new_Table)
+# for liste in Table_sept_derniers_jours.rows:
+#     if liste[2] =='84':
+#         print(liste)
+#print(Agregation().transform(Table, 0, "nb", "region"))
 
 # data_un = donnees_brut.convert()
 #
