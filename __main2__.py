@@ -14,16 +14,29 @@ from transformers.agregation import Agregation
 from transformers.total_id import Total_id
 from estimators.kmeans import Kmeans
 from transformers.clean import Clean
+from estimators.kmeans import Kmeans
+import numpy as np
 
-donnees_brut = Conversion('D:/Perso/ENSAI/', "VacancesScolaires.json")
+donnees_brut = Conversion('D:/Perso/ENSAI/', "covid-hospit-incid-reg-2021-03-03-17h20.csv")
 
 data = donnees_brut.convert()
 
 Table = Jeu_de_donnees(data)
+Table = Fenetrage().transform(Table, '2020-03-19', '2020-03-26')
+Table = Selection_variable().transform(Table, ['incid_rea'])
+#
+#
+Table = Normalisation().transform(Table)
+
+K = Kmeans().fit(Table, 3, 100)
+#
+print(K)
+
+# Table = Clean().transform(Table, remove=True)
+#
+# print(Kmeans().fit(Table, 3, 50))
 
 
-C = Clean().transform(Table, remove=True)
-Clean().transform(C)
 
 # Table_sept_derniers_jours = Fenetrage().transform(Table, '2020-03-18', '2020-03-24', 0)
 #

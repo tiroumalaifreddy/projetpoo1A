@@ -10,7 +10,7 @@ class Normalisation(Transformers):
         for liste in Table.rows:
             l = []
             for i in range(len(liste)):
-                l.append(round(((float(liste[i]) - M().fit(Table, Table.column_names[i]))/E().fit(Table, Table.column_names[i])),2))
+                l.append(round(((float(liste[i]) - M().fit(Table, i))/E().fit(Table, i)),2))
             new_data.append(l)
         data = [Table.column_names] + new_data
         J = Jeu_de_donnees(data)
