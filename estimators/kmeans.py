@@ -1,4 +1,5 @@
 import copy
+import random
 
 from estimators.estimators import Estimators
 from Data.Jeu_de_donnees import Jeu_de_donnees
@@ -9,45 +10,37 @@ import numpy as np
 
 class Kmeans(Estimators):
     def fit(self, Table, k, nstart):
-        X = Table.rows
-        X = np.array(X)
-        n = len(X)
-        c = len(Table.column_names)
-        idx = np.random.choice(len(X), k, replace=False)
-        centers = X[idx, :]
-        # mean = []
-        # ecarttype = []
-        # for index_variable in range(len(Table.column_names)):
-        #     mean.append(Moyenne().fit(Table, index_variable))
-        #     ecarttype.append(Ecart_type().fit(Table, index_variable))
-        # centers = []
-        # for i in range(k):
-        #     l_temp = []
-        #     for j in range(c):
-        #         l_temp.append(X[j])
-        #     centers.append(l_temp)
-        clusters = np.zeros(n)
-        euc_dist = np.zeros((n, k))
+        X = np.array(Table.rows)
+        liste_index_random = random.sample(range(0, len(X)), k)
+        centers = []
+        for index in liste_index_random:
+            centers.append(X[index])
+        centers = np.array(centers)
+        euc_dist = np.zeros((len(X), k))
+        for i in range(k):
+            euc_dist[:, i] = np.linalg.norm(X - centers[i], axis=1)
+        clusters = np.argmin(euc_dist, axis=1)
         for indice in range(nstart):
+            centers = []
             for i in range(k):
-                euc_dist[:, i] =np.linalg.norm(X - centers[i], axis = 1)
-            clusters = np.argmin(euc_dist, axis = 1)
+                liste_temp = X[clusters==i]
+                liste_mean = []
+                for c in range(liste_temp.shape[1]):
+                    column = liste_temp[:,c]
+                    somme = 0
+                    for elt in column:
+                        somme += elt
+                    liste_mean.append(somme/len(liste_temp))
+                centers.append(liste_mean)
+            centers = np.array(centers)
+            euc_dist = np.zeros((len(X), k))
             for i in range(k):
-                for j in range(c):
-                    if clusters[j] == i:
-                        centers[i][j] = Moyenne().fit(Table, j)
+                euc_dist[:, i] = np.linalg.norm(X - centers[i], axis=1)
+            clusters = np.argmin(euc_dist, axis=1)
         return clusters
-        # while condition != 0:
-        #     for i in range(k):
-        #         euc_dist[:, i] =np.linalg.norm(X_np - centers[i], axis = 1)
-        #     clusters = np.argmin(euc_dist, axis = 1)
-        #     centers_old = copy.deepcopy(centers)
-        #     for i in range(k):
-        #         for j in range(c):
-        #             if clusters[j] == i:
-        #                 centers[i][j] = Moyenne().fit(Table, j)
-        #     condition = np.linalg.norm(centers - centers_old)
-        # return clusters
+
+
+
 
 
 

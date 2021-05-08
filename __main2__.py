@@ -13,7 +13,8 @@ from transformers.selection_ligne import Selection_ligne
 from transformers.agregation import Agregation
 from transformers.total_id import Total_id
 from transformers.clean import Clean
-from estimators.test import Kmean
+from estimators.kmeans import Kmeans
+from sklearn.cluster import KMeans as Km
 import numpy as np
 
 donnees_brut = Conversion(folder = "/home/freddy/Documents/", filename="covid-hospit-incid-reg-2021-03-03-17h20.csv")
@@ -31,9 +32,11 @@ Table = Normalisation().transform(Table)
 
 X = np.array(Table.rows)
 
-K = Kmean().fit(X, 2, 500)
+K = Kmeans().fit(Table, 2, 500)
 # #
+Kmea = Km(n_clusters=2, random_state=0).fit(X)
 print(K)
+print(Kmea.labels_)
 
 # Table = Clean().transform(Table, remove=True)
 #
