@@ -12,27 +12,28 @@ from transformers.jointure_vertical import Jointure_vertical
 from transformers.selection_ligne import Selection_ligne
 from transformers.agregation import Agregation
 from transformers.total_id import Total_id
-from estimators.kmeans import Kmeans
 from transformers.clean import Clean
-from estimators.kmeans import Kmeans
-
+from estimators.test import Kmean
+import numpy as np
 
 donnees_brut = Conversion(folder = "/home/freddy/Documents/", filename="covid-hospit-incid-reg-2021-03-03-17h20.csv")
 
 data = donnees_brut.convert()
 
 Table = Jeu_de_donnees(data)
-print(Table.rows)
 
-# Table = Fenetrage().transform(Table, '2020-03-19', '2020-03-26')
-# Table = Selection_variable().transform(Table, ['incid_rea'])
-# #
-# #
-# Table = Normalisation().transform(Table)
 
-# K = Kmeans().fit(Table, 3, 100)
+Table = Fenetrage().transform(Table, '2020-03-19', '2020-03-26')
+Table = Selection_variable().transform(Table, ['incid_rea'])
 # #
-# print(K)
+# #
+Table = Normalisation().transform(Table)
+
+X = np.array(Table.rows)
+
+K = Kmean().fit(X, 2, 500)
+# #
+print(K)
 
 # Table = Clean().transform(Table, remove=True)
 #
