@@ -9,32 +9,36 @@ import numpy as np
 
 
 class Kmeans(Estimators):
-    def fit(self, Table, k, nstart):
+    def __init__(self,k, nstart):
+        self.k = k
+        self.nstart = nstart
+
+    def fit(self, Table):
         X = np.array(Table.rows)
-        liste_index_random = random.sample(range(0, len(X)), k)
+        liste_index_random = random.sample(range(0, len(X)), self.k)
         centers = []
         for index in liste_index_random:
             centers.append(X[index])
         centers = np.array(centers)
-        euc_dist = np.zeros((len(X), k))
-        for i in range(k):
+        euc_dist = np.zeros((len(X), self.k))
+        for i in range(self.k):
             euc_dist[:, i] = np.linalg.norm(X - centers[i], axis=1)
         clusters = np.argmin(euc_dist, axis=1)
-        for indice in range(nstart):
+        for indice in range(self.nstart):
             centers = []
-            for i in range(k):
+            for i in range(self.k):
                 liste_temp = X[clusters==i]
                 liste_mean = []
                 for c in range(liste_temp.shape[1]):
-                    column = liste_temp[:,c]
+                    column = liste_temp[:, c]
                     somme = 0
                     for elt in column:
                         somme += elt
                     liste_mean.append(somme/len(liste_temp))
                 centers.append(liste_mean)
             centers = np.array(centers)
-            euc_dist = np.zeros((len(X), k))
-            for i in range(k):
+            euc_dist = np.zeros((len(X), self.k))
+            for i in range(self.k):
                 euc_dist[:, i] = np.linalg.norm(X - centers[i], axis=1)
             clusters = np.argmin(euc_dist, axis=1)
         return clusters
