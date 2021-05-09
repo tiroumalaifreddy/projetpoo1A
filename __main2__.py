@@ -16,27 +16,35 @@ from transformers.clean import Clean
 from estimators.kmeans import Kmeans
 from sklearn.cluster import KMeans as Km
 import numpy as np
+from transformers.pipeline import Pipeline
 
-donnees_brut = Conversion(folder = "/home/freddy/Documents/", filename="covid-hospit-incid-reg-2021-03-03-17h20.csv")
+donnees_brut = Conversion(folder = "/home/freddy/Downloads/", filename="donnees-hospitalieres-nouveaux-covid19-2021-03-03-17h03.csv")
 
 data = donnees_brut.convert()
 
 Table = Jeu_de_donnees(data)
 
+P = Pipeline().transform(Table, [Fenetrage('2021-02-25','2021-03-03', index_date=1), Selection_variable(['dep', 'incid_hosp']), Total_id([1])])
+print(P)
 
-Table = Fenetrage().transform(Table, '2020-03-19', '2020-03-26')
-Table = Selection_variable().transform(Table, ['incid_rea'])
-# #
-# #
-Table = Normalisation().transform(Table)
 
-X = np.array(Table.rows)
 
-K = Kmeans().fit(Table, 2, 500)
-# #
-Kmea = Km(n_clusters=2, random_state=0).fit(X)
-print(K)
-print(Kmea.labels_)
+
+
+
+# Table = Fenetrage('2020-03-19', '2020-03-26').transform(Table)
+# Table = Selection_variable(['incid_rea']).transform(Table)
+# # #
+# # #
+# Table = Normalisation().transform(Table)
+#
+# X = np.array(Table.rows)
+#
+# K = Kmeans(2, 500).fit(Table)
+# # #
+# Kmea = Km(n_clusters=2, random_state=0).fit(X)
+# print(K)
+# print(Kmea.labels_)
 
 # Table = Clean().transform(Table, remove=True)
 #

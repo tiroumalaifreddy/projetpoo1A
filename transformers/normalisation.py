@@ -1,5 +1,5 @@
-from estimators.moyenne import Moyenne as M
-from estimators.ecart_type import Ecart_type as E
+from estimators.moyenne import Moyenne
+from estimators.ecart_type import Ecart_type
 from transformers.transformers import Transformers
 from Data.Jeu_de_donnees import Jeu_de_donnees
 
@@ -10,7 +10,7 @@ class Normalisation(Transformers):
         for liste in Table.rows:
             l = []
             for i in range(len(liste)):
-                l.append(round(((float(liste[i]) - M().fit(Table, i))/E().fit(Table, i)),2))
+                l.append(round(((float(liste[i]) - Moyenne(i).fit(Table))/(Ecart_type(i).fit(Table))),2))
             new_data.append(l)
         data = [Table.column_names] + new_data
         J = Jeu_de_donnees(data)
