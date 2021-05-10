@@ -17,18 +17,20 @@ from estimators.kmeans import Kmeans
 from sklearn.cluster import KMeans as Km
 import numpy as np
 from transformers.pipeline import Pipeline
+from export_csv import Export_csv
 
 donnees_brut = Conversion(folder = "/home/freddy/Downloads/", filename="donnees-hospitalieres-nouveaux-covid19-2021-03-03-17h03.csv")
 
 data = donnees_brut.convert()
 
 Table = Jeu_de_donnees(data)
-print(Table)
+
 P = Pipeline().transform(Table, [Fenetrage('2021-02-25','2021-03-03', index_date=1), Selection_variable(['dep', 'incid_hosp']), Total_id([1])])
-#print(P)
+
+print(P)
 
 
-
+Export_csv().export(P, "out.csv")
 
 
 
