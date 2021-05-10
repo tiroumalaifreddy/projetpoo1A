@@ -18,6 +18,8 @@ from sklearn.cluster import KMeans as Km
 import numpy as np
 from transformers.pipeline import Pipeline
 from export_csv import Export_csv
+from Export_map.cartoplot import CartoPlot
+import matplotlib as plt
 
 donnees_brut = Conversion(folder = "/home/freddy/Downloads/", filename="donnees-hospitalieres-nouveaux-covid19-2021-03-03-17h03.csv")
 
@@ -25,13 +27,23 @@ data = donnees_brut.convert()
 
 Table = Jeu_de_donnees(data)
 
-P = Pipeline().transform(Table, [Fenetrage('2021-02-25','2021-03-03', index_date=1), Selection_variable(['dep', 'incid_hosp']), Total_id([1])])
+P = Pipeline().transform(Table, [Fenetrage('2021-02-25','2021-03-03', index_date=1), Selection_variable(['dep', 'incid_hosp']), Total_id([1]), Selection_ligne("dep", ["971","972","973","974","975"],symbole="!=")])
 
-print(P)
+Carte = CartoPlot()
 
+d = {}
 
-Export_csv().export(P, "out.csv")
+for i in range(len(P.rows)):
+    d[str(i)] = i
 
+d['69D'] = d['69']
+d['69M'] = d['69']
+del(d['69'])
+d['2A'] = 14
+d['2B'] = 13
+
+MAP = Carte.plot_dep_map(d, x_lim=(-6, 10), y_lim=(41, 52))
+MAP.savefig("fig4.png")
 
 
 # Table = Fenetrage('2020-03-19', '2020-03-26').transform(Table)
