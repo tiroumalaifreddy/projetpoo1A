@@ -18,17 +18,19 @@ class Conversion():
         if self.filename[-5:] == ".json":
             with open(self.folder + self.filename) as json_file:
                 data = json.load(json_file)
-            liste = []
+            liste_data = []
             a = data[choix]
+            list_keys = []
+            for key in a[0].keys():
+                list_keys.append(key)
+            liste_data.append(list_keys)
+            list_values = []
             for i in range(len(a)):
-                cle = []
                 valeur = []
-                for key, value in a[i].items():
+                for value in a[i].values():
                     valeur.append(value)
-                    if not key in cle:
-                        cle.append(key)
-                liste += [valeur]
-            liste.insert(0, cle)
-            return liste
+                list_values.append(valeur)
+            liste_data += list_values
+            return liste_data
         else:
             return "Erreur : Seuls les fichiers .csv et .json sont acceptés"
