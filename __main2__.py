@@ -26,24 +26,25 @@ donnees_brut = Conversion(folder = "/home/freddy/Downloads/", filename="donnees-
 data = donnees_brut.convert()
 
 Table = Jeu_de_donnees(data)
-
-P = Pipeline().transform(Table, [Fenetrage('2021-02-25','2021-03-03', index_date=1), Selection_variable(['dep', 'incid_hosp']), Total_id([1]), Selection_ligne("dep", ["971","972","973","974","975"],symbole="!=")])
-
-Carte = CartoPlot()
-
-d = {}
-
-for i in range(len(P.rows)):
-    d[str(i)] = i
-
-d['69D'] = d['69']
-d['69M'] = d['69']
-del(d['69'])
-d['2A'] = 14
-d['2B'] = 13
-
-MAP = Carte.plot_dep_map(d, x_lim=(-6, 10), y_lim=(41, 52))
-MAP.savefig("fig4.png")
+F = Fenetrage('2021-02-23', '2021-02-23', index_date=1).transform(Table)
+print(F)
+# P = Pipeline().transform(Table, [Fenetrage('2021-02-25','2021-03-03', index_date=1), Selection_variable(['dep', 'incid_hosp']), Total_id([1]), Selection_ligne("dep", ["971","972","973","974","975"],symbole="!=")])
+#
+# Carte = CartoPlot()
+#
+# d = {}
+#
+# for i in range(len(P.rows)):
+#     d[str(i)] = i
+#
+# d['69D'] = d['69']
+# d['69M'] = d['69']
+# del(d['69'])
+# d['2A'] = 14
+# d['2B'] = 13
+#
+# MAP = Carte.plot_dep_map(d, x_lim=(-6, 10), y_lim=(41, 52))
+# MAP.savefig("fig4.png")
 
 
 # Table = Fenetrage('2020-03-19', '2020-03-26').transform(Table)
