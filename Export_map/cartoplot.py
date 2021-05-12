@@ -290,7 +290,10 @@ class CartoPlot:
                        bottom=False,
                        labelleft=False,
                        labelbottom=False)
-        fig.colorbar(cm.ScalarMappable(norm=nrm, cmap=cmap), ax=ax)
+        # For older versions of matplotlib requiring to set some array
+        sm = cm.ScalarMappable(norm=nrm, cmap=cmap)
+        sm.set_array([])
+        fig.colorbar(sm, ax=ax)
         
         # Go through all shapes
         for shape_idx, shape in enumerate(sf.shapeRecords()):
@@ -301,7 +304,7 @@ class CartoPlot:
                 y = [i[1] for i in shape.shape.points[start_part:start_next_part]]
                 ax.plot(x, y, 'k')
                 if len(data) > 0 and data[shape_idx] is not None:
-                    ax.fill(x, y, clrs.to_hex(cmap(data[shape_idx])))
+                    ax.fill(x, y, clrs.rgb2hex(cmap(data[shape_idx])))
                 start_part = start_next_part
 
             # Find the center point of the shape
