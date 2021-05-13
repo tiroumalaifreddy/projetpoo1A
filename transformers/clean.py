@@ -3,8 +3,11 @@ from transformers.transformers import Transformers
 
 
 class Clean(Transformers):
-    def transform(self, Table, remove=False):
-        if not remove:
+    def __init__(self, remove=False):
+        self.remove = remove
+
+    def transform(self, Table):
+        if not self.remove:
             indice = 0
             for liste in Table.rows:
                 for i in liste:
@@ -14,7 +17,7 @@ class Clean(Transformers):
                 print("Des valeurs sont manquantes")
             if indice == 0:
                 print("Aucune valeur manquante")
-        if remove:
+        if self.remove:
             new_data=[Table.column_names]
             for liste in Table.rows:
                 indice = 0

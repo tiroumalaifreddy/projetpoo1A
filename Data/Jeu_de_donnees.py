@@ -1,4 +1,31 @@
 class Jeu_de_donnees():
+    """Création d'un objet Jeu_de_donnees
+
+    Attributes
+    ----------
+
+    column_names : list
+        nom des variables du jeu de données
+    rows : list
+        lignes du jeu de données
+
+    Paramaters
+    ----------
+
+    data : list
+        liste de listes comprenant les données, dont la première liste est column_names
+
+    Examples
+    --------
+
+    >>> Table = Jeu_de_donnees([["dep", "dc"], ["01", "12"], ["02", 10]])
+    >>> print(Table)
+    ["dep, "dc]
+    ["01", "12"]
+    ["02", 10]
+
+
+    """
     def __init__(self, data):
         self.column_names = data[0]
         self.rows = data[1:]
@@ -30,4 +57,8 @@ class Jeu_de_donnees():
             liste.pop(position)
 
     def __str__(self):
-        return "{}".format([self.column_names] + self.rows)
+        L = [self.column_names] + self.rows
+        carac = ""
+        for i in L:
+            carac += str(i)+ '\n'
+        return carac
