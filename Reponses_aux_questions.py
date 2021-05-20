@@ -20,7 +20,7 @@ from datetime import date, timedelta
 
 #Question 1: Quel est le nombre total d'hospitalisations dues au Covid-19 ?
 
-Q1 = Jeu_de_donnees(Conversion(folder = "/home/freddy/Downloads/", filename="donnees-hospitalieres-nouveaux-covid19-2021-05-09-19h08.csv").convert())
+Q1 = Jeu_de_donnees(Conversion(folder = "/home/freddy/Desktop/", filename="donnees-hospitalieres-nouveaux-covid19-2021-05-09-19h08.csv").convert())
 
 Q1 = Pipeline().transform(Q1, [Agregation(0, "incid_hosp", echelle="region"), Agregation(0, "incid_hosp", echelle="nationale")])
 
@@ -34,10 +34,10 @@ print(Q1)
 
 #Question 2: Combien de nouvelles hospitalisations ont eu lieu ces 7 derniers jours dans chaque département ?
 
-Q2 = Jeu_de_donnees(Conversion(folder = "/home/freddy/Downloads/", filename="donnees-hospitalieres-nouveaux-covid19-2021-05-09-19h08.csv").convert())
+Q2 = Jeu_de_donnees(Conversion(folder = "/home/freddy/Desktop/", filename="donnees-hospitalieres-nouveaux-covid19-2021-05-09-19h08.csv").convert())
 
-Q2 = Pipeline().transform(Q2, [Fenetrage("2021-05-03", "2021-05-09", index_date=1), Selection_variable(["dep", "incid_hosp"]), Total_id([1])])
-
+Q2 = Pipeline().transform(Q2, [Fenetrage("2021-05-03", "2021-05-09", index_date=1), Selection_variable(["dep", "incid_hosp"]),Total_id([1])])
+Selection_variable(["dep", "incid_hosp"]),
 print(Q2)
 """
 ['dep', 'incid_hosp']
@@ -162,7 +162,7 @@ MAP.savefig("Q2.png") # visualisation du résultat sur fond de carte
 
 #Question 3: Comment évolue la moyenne des nouvelles hospitalisations journalières de cette semaine par rapport à celle de la semaine dernière ?
 
-Q3 = Jeu_de_donnees(Conversion(folder = "/home/freddy/Downloads/", filename="donnees-hospitalieres-nouveaux-covid19-2021-05-09-19h08.csv").convert())
+Q3 = Jeu_de_donnees(Conversion(folder = "/home/freddy/Desktop/", filename="donnees-hospitalieres-nouveaux-covid19-2021-05-09-19h08.csv").convert())
 
 Q3_semaine_derniere = Pipeline().transform(Q3, [Fenetrage("2021-04-26", "2021-05-02", index_date=1), Selection_variable(["jour","incid_hosp"]), Total_id([1])])
 Q3_semaine_actuelle = Pipeline().transform(Q3, [Fenetrage("2021-05-03", "2021-05-09", index_date=1), Selection_variable(["jour","incid_hosp"]), Total_id([1])])
@@ -177,7 +177,7 @@ print(Moyenne(1).fit(Q3_semaine_actuelle) - Moyenne(1).fit(Q3_semaine_derniere))
 #Question 4: Quel est le résultat de k-means avec k=3 sur les données des départements du mois de Janvier 2021,lissées avec une moyenne glissante de 7 jours ?
 
 Q4_part1 = Jeu_de_donnees(Conversion(folder = "/home/freddy/Downloads/", filename="donnees-hospitalieres-covid19-2021-05-09-19h08.csv").convert())
-Q4_part2 = Jeu_de_donnees(Conversion(folder = "/home/freddy/Downloads/", filename="donnees-hospitalieres-nouveaux-covid19-2021-05-09-19h08.csv").convert())
+Q4_part2 = Jeu_de_donnees(Conversion(folder = "/home/freddy/Desktop/", filename="donnees-hospitalieres-nouveaux-covid19-2021-05-09-19h08.csv").convert())
 
 Q4_part1 = Pipeline().transform(Q4_part1, [Fenetrage("2021-01-01", "2021-01-31", 2), Selection_ligne("sexe", ["0"]), Selection_variable(["dep","hosp", "rea", "rad", "dc"])])
 Q4_part2 = Pipeline().transform(Q4_part2, [Fenetrage("2021-01-01", "2021-01-31", 1), Selection_variable(["incid_hosp", "incid_rea", "incid_rad", "incid_dc"])])
@@ -214,7 +214,7 @@ Dates_Toussaint = Pipeline().transform(Dates, [Selection_ligne("annee_scolaire",
 date_fin = Dates_Toussaint.rows[0][1]
 date_fin_plus_6 = (date.fromisoformat(date_fin) + timedelta(days=6)).isoformat()
 
-Q5 = Jeu_de_donnees(Conversion(folder = "/home/freddy/Downloads/", filename="donnees-hospitalieres-nouveaux-covid19-2021-05-09-19h08.csv").convert())
+Q5 = Jeu_de_donnees(Conversion(folder = "/home/freddy/Desktop/", filename="donnees-hospitalieres-nouveaux-covid19-2021-05-09-19h08.csv").convert())
 
 Q5 = Pipeline().transform(Q5, [Fenetrage(date_fin, date_fin_plus_6, index_date=1), Selection_variable(["dep", "incid_rea"]), Agregation(0, "incid_rea", echelle="region"),Agregation(0, "incid_rea", echelle="nationale")])
 

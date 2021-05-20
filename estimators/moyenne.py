@@ -5,9 +5,9 @@ class Moyenne(Estimators):
     def __init__(self, index_variable):
         self.index_variable = index_variable
 
-    def fit(self, Jeu_de_donnees):
+    def fit(self, Table):
         somme = 0
-        for liste in Jeu_de_donnees.rows:
+        for liste in Table.rows:
             somme += float(liste[self.index_variable])
-        return somme/len(Jeu_de_donnees.rows)
+        return somme/len(Table.rows)
 

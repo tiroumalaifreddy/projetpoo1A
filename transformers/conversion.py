@@ -11,7 +11,7 @@ class Conversion():
         if self.filename[-4:] == ".csv":
             data = []
             with open(self.folder + self.filename, encoding='ISO-8859-1') as csvfile:
-                covidreader = csv.reader(csvfile, delimiter=';')
+                covidreader = csv.reader(csvfile, delimiter=',')
                 for row in covidreader:
                     data.append(row)
             return data
